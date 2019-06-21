@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kuugen.modular.system.dao.SysQuartzMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.kuugen.modular.system.model.SysQuartz">
+        <id column="ID" property="id" />
+        <result column="JOB_NAME" property="jobName" />
+        <result column="CLASS_NAME" property="className" />
+        <result column="PLAN" property="plan" />
+        <result column="REMARK" property="remark" />
+        <result column="SEQ" property="seq" />
+        <result column="IS_ACTIVE" property="isActive" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        ID, JOB_NAME, CLASS_NAME, PLAN, REMARK, SEQ, IS_ACTIVE
+    </sql>
+
+</mapper>
