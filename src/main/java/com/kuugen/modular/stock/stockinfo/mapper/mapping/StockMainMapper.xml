@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kuugen.modular.stock.stockinfo.mapper.StockMainMapper">
+	<select id="getStockCount" parameterType="map" resultType="int">
+		select count(1) from  tb_stock_main 
+			where  STOCK_CODE =#{stock_code,jdbcType=VARCHAR}
+	</select>
+
+	<!-- 新增设备概况信息	 -->
+	<select id="addStockMain" parameterType="map">
+		insert into tb_stock_main
+		 (
+			STOCK_CODE,
+			STOCK_TYPE,
+			STOCK_NAME,
+			STOCK_NAME_EN,
+			NOW_PRICE,
+			volume,
+			FLOW_STOCKS,
+			TOL_STOCKS,
+			PB,
+			PE,
+			NET_ASSETS,
+			TOL_VAL,
+			REMARKS )  values 
+			( 
+			#{stock_code,jdbcType=VARCHAR},
+			#{stock_type,jdbcType=VARCHAR},
+			#{stock_name,jdbcType=VARCHAR},
+			#{stock_name_en,jdbcType=VARCHAR},
+			#{now_price,jdbcType=VARCHAR},
+			#{volume,jdbcType=VARCHAR},
+			#{flow_stocks,jdbcType=VARCHAR},
+			#{tol_stocks,jdbcType=VARCHAR},
+			#{pb,jdbcType=VARCHAR},
+			#{pe,jdbcType=VARCHAR},
+			#{net_assets,jdbcType=VARCHAR},
+			#{tol_val,jdbcType=VARCHAR},
+			#{remarks,jdbcType=VARCHAR}
+			)
+			
+	</select>
+	
+	<!-- 更新设备概况信息	 -->
+	<select id="updateStockMain" parameterType="map">
+	   update tb_stock_main t
+	     set stock_type    =#{stock_type,jdbcType=VARCHAR},   
+			 stock_name    =#{stock_name,jdbcType=VARCHAR},   
+			 stock_name_en =#{stock_name_en,jdbcType=VARCHAR},
+			 now_price     =#{now_price,jdbcType=VARCHAR},    
+			 volume        =#{volume,jdbcType=VARCHAR},       
+			 flow_stocks   =#{flow_stocks,jdbcType=VARCHAR},  
+			 tol_stocks    =#{tol_stocks,jdbcType=VARCHAR},   
+			 pb            =#{pb,jdbcType=VARCHAR},           
+			 pe            =#{pe,jdbcType=VARCHAR},           
+			 net_assets    =#{net_assets,jdbcType=VARCHAR},   
+			 tol_val       =#{tol_val,jdbcType=VARCHAR},      
+			 remarks       =#{remarks,jdbcType=VARCHAR}      
+	     where    stock_code = #{stock_code,jdbcType=VARCHAR} 
+	     
+	</select>
+	
+	<sql id="getListSql">
+			FROM
+		  tb_stock_main t
+		 where 1=1
+		 
+	</sql>
+	
+	<!-- 获取股票列表 -->
+	<select id="getStockList" parameterType="map" resultType="com.kuugen.modular.stock.model.TbStockMainModel">
+				SELECT
+				t.stock_id,
+				t.stock_code,
+				t.stock_type,
+				t.stock_name,
+				t.stock_name_en,
+				t.now_price,
+				t.volume,
+				t.flow_stocks,
+				t.tol_stocks,
+				t.pb,
+				t.pe,
+				t.net_assets,
+				t.tol_val,
+				t.remarks
+				<include refid="getListSql" />
+			order by STOCK_CODE
+			<!-- 分页  -->
+		 limit   #{jqRes.nowIndex},  #{jqRes.rows} 
+	</select>
+	 <!-- 获取股票查询总数-->
+	<select id="getAllStockCount" parameterType="map" resultType="int"  >
+	   select count(1) 
+	      <include refid="getListSql" />
+	</select>
+	
+	<select id="getNotInitStock" resultType="com.kuugen.modular.stock.model.TbStockMainModel">
+		select * from tb_stock_main t
+		where (select count(1) from tb_stock_dayk d where d.STOCK_CODE =
+		t.STOCK_CODE ) =0
+		 or STOCK_CODE in ('300059','300003','300541','600093','600188')
+	</select>
+	
+	<insert id="addLogs" parameterType="List">
+		INSERT INTO test_stock_log(stock_code,value) values
+		<foreach collection="list" item="item" index="index"   separator=",">
+			(#{item.stock_code}  , #{item.value}  ) 
+		</foreach>
+	</insert>
+	<!--<select id="getUserList" parameterType="java.lang.String" resultType="com.kuugen.system.user.model.TbUserStock">
+		SELECT
+			us.user_id,
+			us.stock_code,
+			(
+				SELECT
+					u.open_id
+				FROM
+					tb_sys_user u
+				WHERE
+					u.user_id = us.user_id
+			) open_id,
+			(
+				SELECT
+					s.STOCK_NAME
+				FROM
+					tb_stock_main s
+				WHERE
+					s.STOCK_CODE = us.stock_code
+			) STOCK_NAME
+		FROM
+			tb_user_stock us
+		WHERE
+			us.stock_code = #{stock_code}
+	</select>-->
+</mapper>

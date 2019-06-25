@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kuugen.modular.stock.dayk.mapper.StockDaykMapper">
+
+	<select id="addDayk" parameterType="map" >
+		insert into TB_STOCK_DAYK
+		(STOCK_CODE, OPEN_PRICE ,HIGH_PICE, LOW_PRICE, 
+		CLOSE_PRICE,vol_num ,vol_amount,STOCK_DATE,
+		year,jidu
+		)  values 
+		 (#{stock_code,jdbcType=VARCHAR},
+		 #{open_price,jdbcType=VARCHAR},
+		 #{high_pice,jdbcType=VARCHAR},
+		 #{low_price,jdbcType=VARCHAR},
+		 #{close_price,jdbcType=VARCHAR},
+		 #{vol_num,jdbcType=VARCHAR},
+		 #{vol_amount,jdbcType=VARCHAR},
+		 #{stock_date,jdbcType=VARCHAR},
+		 #{year,jdbcType=VARCHAR},
+		 #{jidu,jdbcType=VARCHAR}
+		 )
+		 
+	</select>
+	 <select id="deleteDaykByjd"  parameterType="map">
+	 	delete t from    tb_stock_dayk t where 1=1
+			and t.stock_code =#{stock_code,jdbcType=VARCHAR}
+			and t.year =#{year,jdbcType=VARCHAR}
+			and t.jidu =#{jidu,jdbcType=VARCHAR}
+	 </select>
+	 <select id="getDayKlist" parameterType="map" resultType="com.kuugen.modular.stock.model.TbStockDaykModel">
+	 	select * from tb_stock_dayk t
+		where t.STOCK_CODE =#{stock_code,jdbcType=VARCHAR}
+		 
+		 <![CDATA[ and t.STOCK_DATE < #{date,jdbcType=VARCHAR} ]]>
+		order by t.STOCK_DATE  desc
+		limit #{num,jdbcType=VARCHAR}
+	 </select>
+</mapper>

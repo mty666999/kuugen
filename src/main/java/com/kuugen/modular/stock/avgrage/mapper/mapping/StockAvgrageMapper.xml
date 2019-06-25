@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kuugen.modular.stock.avgrage.mapper.StockAvgrageMapper">
+	 
+	 <select id="getCount" parameterType="com.kuugen.modular.stock.model.TbStockAvgrageModel" resultType="int">
+		select count(1) from tb_stock_average t
+		where t.stock_code = #{stock_code,jdbcType=VARCHAR}
+		and t.date =#{date,jdbcType=VARCHAR}
+		and t.day_num =#{day_num,jdbcType=VARCHAR}
+	 </select>
+     
+     <insert id="insert" parameterType="com.kuugen.modular.stock.model.TbStockAvgrageModel" >
+     	insert into tb_stock_average 
+     	(stock_code,day_num,date,update_time,ave_price)
+     	values
+     	(#{stock_code,jdbcType=VARCHAR},#{day_num,jdbcType=VARCHAR},
+     	#{date,jdbcType=VARCHAR},#{update_time,jdbcType=VARCHAR},#{ave_price,jdbcType=VARCHAR})
+     </insert>
+     <update id="update" parameterType="com.kuugen.modular.stock.model.TbStockAvgrageModel">
+     	update tb_stock_average set
+     		ave_price = #{ave_price,jdbcType=VARCHAR},
+     		update_time = #{update_time,jdbcType=VARCHAR}
+     	where stock_code = #{stock_code,jdbcType=VARCHAR}
+     	and date = #{date,jdbcType=VARCHAR}
+     	and day_num = #{day_num,jdbcType=VARCHAR}
+     	
+     </update>
+</mapper>

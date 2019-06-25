@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kuugen.modular.stock.norm.mapper.NormMapper">
+
+	 <select id="getNorminfo" parameterType="com.kuugen.modular.stock.model.TbNormDataModel" resultType="com.kuugen.modular.stock.model.TbNormDataModel">
+	 	select * from tb_norm_data t
+	 	where t.norm_id =#{norm_id,jdbcType=VARCHAR}
+	 	and t.stock_code = #{stock_code,jdbcType=VARCHAR}
+	 
+	 </select>
+	 <select id="insert" parameterType="com.kuugen.modular.stock.model.TbNormDataModel" >
+	 	insert into tb_norm_data(norm_id,stock_code,state)
+	 	values (#{norm_id,jdbcType=VARCHAR},#{stock_code,jdbcType=VARCHAR},#{state,jdbcType=VARCHAR})
+	 </select>
+	 <select id="update" parameterType="com.kuugen.modular.stock.model.TbNormDataModel" >
+	 	update tb_norm_data set
+	 	  state = #{state,jdbcType=VARCHAR}
+	 	  where  norm_id =#{norm_id,jdbcType=VARCHAR}
+	 	and  stock_code = #{stock_code,jdbcType=VARCHAR}
+	 </select>
+	 <select id="insertlog" parameterType="com.kuugen.modular.stock.model.TbNormDataModel">
+	 	insert into tb_norm_log(norm_id,stock_code,state,log_time)
+	 	values (#{norm_id,jdbcType=VARCHAR},#{stock_code,jdbcType=VARCHAR},#{state,jdbcType=VARCHAR},now())
+	 </select>
+</mapper>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kuugen.modular.work.ipconfig.mapper.TbWorkIpMapper">
+	 
+	 <select id="getWorkIpCount"  parameterType="java.lang.String" 
+		resultType="int">
+		 select count(1) from tb_work_ip t
+		 where t.ip_addr =#{ip,jdbcType=VARCHAR}
+		
+	</select>
+  	<select id="addWorkIp"  parameterType="com.kuugen.modular.work.ipconfig.model.TbWorkIpModel" >
+		 insert into tb_work_ip
+		 (ip_addr,port,password,type,user_name,is_usable,add_time)
+		 values
+		 (#{ip_addr,jdbcType=VARCHAR},#{port,jdbcType=VARCHAR},
+		 #{password,jdbcType=VARCHAR},#{type,jdbcType=VARCHAR},
+		 #{user_name,jdbcType=VARCHAR},'0',NOW())
+		
+	</select>
+	
+	<select id="getOne" resultType="com.kuugen.modular.work.ipconfig.model.TbWorkIpModel" >
+		SELECT
+			t1.id,t1.IP_ADDR,t1.`PORT`,t1.IS_USABLE,t1.ADD_TIME
+		FROM
+			tb_work_ip AS t1
+		JOIN (
+			SELECT
+				ROUND(
+					RAND() * (
+						(SELECT MAX(id) FROM tb_work_ip) - (SELECT MIN(id) FROM tb_work_ip)
+					) + (SELECT MIN(id) FROM tb_work_ip)
+				) AS id
+		) AS t2
+		WHERE
+			t1.id >= t2.id
+			 
+		ORDER BY
+			t1.id
+		LIMIT 1
+	</select>
+	<delete id="delete" parameterType="com.kuugen.modular.work.ipconfig.model.TbWorkIpModel">
+	  delete from tb_work_ip 
+	  where id = #{id,jdbcType=VARCHAR}
+	</delete>
+</mapper>

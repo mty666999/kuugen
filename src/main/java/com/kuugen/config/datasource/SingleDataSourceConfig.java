@@ -32,7 +32,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @ConditionalOnProperty(prefix = "guns.muti-datasource", name = "open", havingValue = "false", matchIfMissing = true)
 @EnableTransactionManagement
-@MapperScan(basePackages = {"com.kuugen.modular.*.mapper"})
+@MapperScan(basePackages = {"com.kuugen.modular.*.mapper","com.kuugen.modular.*.dao","com.kuugen.modular.*.mapping"})
 public class SingleDataSourceConfig {
 
     /**
