@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kuugen.modular.stock.userstock.dao.TbSysUserMapper">
+	 
+
+    <select id="getUserByOpenId" parameterType="java.lang.String" resultType="com.kuugen.modular.stock.model.TbSysUserModel">
+    	 select t.USER_ID,t.USER_CODE,t.password, t.USER_NAME,t.USER_PHONE,t.USER_TYPE,t.ORG_ID,t.DEPT_ID,t.USER_STATE,t.open_id from tb_sys_user t
+		where t.open_id =#{open_id,jdbcType=VARCHAR}
+    </select>
+
+</mapper>
