@@ -10,9 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.Map;
 
 
- 
 @Service(value="wormService")
 public class WormServiceImpl  implements WormService {
 
@@ -27,12 +27,13 @@ public class WormServiceImpl  implements WormService {
 		}
 		//此时随机获取一个代理ip
 		TbWorkIpModel ip=tbWorkIpMapper.getOne();
+
 		//获取请求连接
         Connection con=null;
 		if(ip==null){
 			con = Jsoup.connect(url.toString());
 		}else{
-			con = Jsoup.connect(url.toString()).proxy(ip.getIp_addr(), Integer.parseInt( ip.getPort())); 
+			con = Jsoup.connect(url.toString()).proxy(ip.getIpAddr(), Integer.parseInt( ip.getPort()));
 		}
 		 
         //解析请求结果

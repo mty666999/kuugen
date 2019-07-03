@@ -27,5 +27,6 @@ public interface StockMainMapper {
 
 	List<TbUserStock> getUserList(String stock_code);
 
-	 
+
+	List<Map<String,String>> getStockListAll();
 }

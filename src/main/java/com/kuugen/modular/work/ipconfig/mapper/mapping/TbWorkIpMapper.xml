@@ -12,15 +12,35 @@
 		 insert into tb_work_ip
 		 (ip_addr,port,password,type,user_name,is_usable,add_time)
 		 values
-		 (#{ip_addr,jdbcType=VARCHAR},#{port,jdbcType=VARCHAR},
+		 (#{ipAddr,jdbcType=VARCHAR},#{port,jdbcType=VARCHAR},
 		 #{password,jdbcType=VARCHAR},#{type,jdbcType=VARCHAR},
-		 #{user_name,jdbcType=VARCHAR},'0',NOW())
+		 #{userName,jdbcType=VARCHAR},'0',NOW())
 		
 	</select>
-	
+
+	<select id="getOneMap" resultType="java.util.HashMap" >
+		SELECT
+			t1.id,t1.ip_addr,t1.`PORT` ,t1.IS_USABLE as "is_usable",t1.ADD_TIME as "add_time"
+		FROM
+			tb_work_ip AS t1
+		JOIN (
+			SELECT
+				ROUND(
+					RAND() * (
+						(SELECT MAX(id) FROM tb_work_ip) - (SELECT MIN(id) FROM tb_work_ip)
+					) + (SELECT MIN(id) FROM tb_work_ip)
+				) AS id
+		) AS t2
+		WHERE
+			t1.id >= t2.id
+
+		ORDER BY
+			t1.id
+		LIMIT 1
+	</select>
 	<select id="getOne" resultType="com.kuugen.modular.work.ipconfig.model.TbWorkIpModel" >
 		SELECT
-			t1.id,t1.IP_ADDR,t1.`PORT`,t1.IS_USABLE,t1.ADD_TIME
+			t1.id,t1.ip_addr,t1.`PORT` ,t1.IS_USABLE as "is_usable",t1.ADD_TIME as "add_time"
 		FROM
 			tb_work_ip AS t1
 		JOIN (

@@ -108,6 +108,10 @@
 			(#{item.stock_code}  , #{item.value}  ) 
 		</foreach>
 	</insert>
+	<select id="getStockListAll" resultType="java.util.HashMap">
+		select t.stock_type,t.stock_code from tb_stock_main t
+		where  1=1
+	</select>
 	<!--<select id="getUserList" parameterType="java.lang.String" resultType="com.kuugen.system.user.model.TbUserStock">
 		SELECT
 			us.user_id,

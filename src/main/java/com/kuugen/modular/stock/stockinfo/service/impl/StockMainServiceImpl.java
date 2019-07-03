@@ -2,6 +2,7 @@ package com.kuugen.modular.stock.stockinfo.service.impl;
 
 import com.kuugen.core.util.DateUtils;
 import com.kuugen.core.util.ResultMsg;
+import com.kuugen.modular.stock.model.TbStockMainModel;
 import com.kuugen.modular.stock.stockinfo.mapper.StockMainMapper;
 import com.kuugen.modular.stock.stockinfo.service.StockMainService;
 
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 @Service(value="stockMainService")
 public class StockMainServiceImpl  implements StockMainService {
@@ -65,6 +67,15 @@ public class StockMainServiceImpl  implements StockMainService {
 		
 		msg.setMessage("保存成功");
 		return msg;
+	}
+
+	/**
+	 * 获取股票列表
+	 * @return
+	 */
+	@Override
+	public List<Map<String,String>> getStockList() {
+		return stockMainMapper.getStockListAll();
 	}
 
 	/*@Override
